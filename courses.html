@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="ru" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Курсы — DanPy</title>
+    <link href="./dist/output.css" rel="stylesheet">
+</head>
+<body class="bg-gray-950 text-white font-sans">
+
+    <!-- Навигация -->
+    <nav class="fixed top-0 w-full z-50 bg-gray-950/80 backdrop-blur-xl border-b border-gray-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <a href="index.html" class="flex items-center gap-2">
+                    <span class="text-3xl">🐍</span>
+                    <span class="text-xl font-bold bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent">DanPy</span>
+                </a>
+                <div class="hidden md:flex items-center gap-8">
+                    <a href="index.html" class="text-gray-300 hover:text-blue-400 transition">Главная</a>
+                    <a href="courses.html" class="text-blue-400 font-medium">Курсы</a>
+                    <a href="about.html" class="text-gray-300 hover:text-blue-400 transition">О нас</a>
+                </div>
+                <div class="flex items-center gap-3">
+                    <a href="login.html" class="hidden sm:block px-4 py-2 text-gray-300 hover:text-white transition">Войти</a>
+                    <a href="register.html" class="px-5 py-2 bg-gradient-to-r from-blue-500 to-purple-600 rounded-lg font-medium hover:from-blue-600 hover:to-purple-700 transition">Регистрация</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Заголовок -->
+    <section class="pt-24 pb-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h1 class="text-3xl sm:text-4xl font-bold mb-4">Наши курсы</h1>
+            <p class="text-gray-400 max-w-xl">Выберите направление и начните обучение в удобном темпе</p>
+
+            <!-- Фильтры -->
+            <div class="flex flex-wrap gap-3 mt-8">
+                <button class="px-5 py-2 bg-blue-500/20 text-blue-400 border border-blue-500/30 rounded-full text-sm font-medium">Все курсы</button>
+                <button class="px-5 py-2 bg-gray-800/50 text-gray-400 border border-gray-700 rounded-full text-sm hover:bg-gray-800 transition">Python Основы</button>
+                <button class="px-5 py-2 bg-gray-800/50 text-gray-400 border border-gray-700 rounded-full text-sm hover:bg-gray-800 transition">Веб-разработка</button>
+                <button class="px-5 py-2 bg-gray-800/50 text-gray-400 border border-gray-700 rounded-full text-sm hover:bg-gray-800 transition">Data Science</button>
+                <button class="px-5 py-2 bg-gray-800/50 text-gray-400 border border-gray-700 rounded-full text-sm hover:bg-gray-800 transition">Автоматизация</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Карточки курсов -->
+    <section class="pb-24">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+
+                <!-- Курс 1 -->
+                <div class="bg-gray-900/50 border border-gray-800 rounded-2xl overflow-hidden hover:border-blue-500/30 transition group">
+                    <div class="h-48 bg-gradient-to-br from-blue-500/20 to-purple-500/20 flex items-center justify-center text-6xl"></div>
+                    <div class="p-6">
+                        <div class="flex items-center gap-2 mb-3">
+                            <span class="px-3 py-1 bg-green-500/10 text-green-400 text-xs rounded-full font-medium">Новичок</span>
+                            <span class="text-gray-500 text-xs"> 3 месяца</span>
+                        </div>
+                        <h3 class="text-lg font-semibold mb-2 group-hover:text-blue-400 transition">Python с нуля до Junior</h3>
+                        <p class="text-gray-400 text-sm mb-4 line-clamp-2">Полный курс программирования на Python. От основ до создания реальных проектов.</p>
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center gap-1 text-yellow-400 text-sm">⭐ 4.9 <span class="text-gray-500">(2,340)</span></div>
+                            <a href="register.html" class="px-4 py-2 bg-blue-500/20 text-blue-400 rounded-lg text-sm font-medium hover:bg-blue-500/30 transition">Подробнее →</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Курс 2 -->
+                <div class="bg-gray-900/50 border border-gray-800 rounded-2xl overflow-hidden hover:border-blue-500/30 transition group">
+                    <div class="h-48 bg-gradient-to-br from-purple-500/20 to-pink-500/20 flex items-center justify-center text-6xl"></div>
+                    <div class="p-6">
+                        <div class="flex items-center gap-2 mb-3">
+                            <span class="px-3 py-1 bg-yellow-500/10 text-yellow-400 text-xs rounded-full font-medium">Средний</span>
+                            <span class="text-gray-500 text-xs">⏱ 4 месяца</span>
+                        </div>
+                        <h3 class="text-lg font-semibold mb-2 group-hover:text-blue-400 transition">Django: Веб-разработка</h3>
+                        <p class="text-gray-400 text-sm mb-4 line-clamp-2">Создание современных веб-приложений на Django. REST API, аутентификация, деплой.</p>
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center gap-1 text-yellow-400 text-sm">⭐ 4.8 <span class="text-gray-500">(1,120)</span></div>
+                            <a href="register.html" class="px-4 py-2 bg-blue-500/20 text-blue-400 rounded-lg text-sm font-medium hover:bg-blue-500/30 transition">Подробнее →</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Курс 3 -->
+                <div class="bg-gray-900/50 border border-gray-800 rounded-2xl overflow-hidden hover:border-blue-500/30 transition group">
+                    <div class="h-48 bg-gradient-to-br from-green-500/20 to-cyan-500/20 flex items-center justify-center text-6xl">📊</div>
+                    <div class="p-6">
+                        <div class="flex items-center gap-2 mb-3">
+                            <span class="px-3 py-1 bg-yellow-500/10 text-yellow-400 text-xs rounded-full font-medium">Средний</span>
+                            <span class="text-gray-500 text-xs">⏱ 5 месяцев</span>
+                        </div>
+                        <h3 class="text-lg font-semibold mb-2 group-hover:text-blue-400 transition">Data Science & ML</h3>
+                        <p class="text-gray-400 text-sm mb-4 line-clamp-2">Анализ данных, визуализация, машинное обучение с библиотеками Pandas, NumPy, Scikit-learn.</p>
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center gap-1 text-yellow-400 text-sm">⭐ 4.9 <span class="text-gray-500">(890)</span></div>
+                            <a href="register.html" class="px-4 py-2 bg-blue-500/20 text-blue-400 rounded-lg text-sm font-medium hover:bg-blue-500/30 transition">Подробнее →</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Курс 4 -->
+                <div class="bg-gray-900/50 border border-gray-800 rounded-2xl overflow-hidden hover:border-blue-500/30 transition group">
+                    <div class="h-48 bg-gradient-to-br from-orange-500/20 to-red-500/20 flex items-center justify-center text-6xl"></div>
+                    <div class="p-6">
+                        <div class="flex items-center gap-2 mb-3">
+                            <span class="px-3 py-1 bg-green-500/10 text-green-400 text-xs rounded-full font-medium">Новичок</span>
+                            <span class="text-gray-500 text-xs">⏱ 2 месяца</span>
+                        </div>
+                        <h3 class="text-lg font-semibold mb-2 group-hover:text-blue-400 transition">Telegram-боты на Python</h3>
+                        <p class="text-gray-400 text-sm mb-4 line-clamp-2">Создание умных ботов для Telegram. AI-интеграция, работа с API, деплой.</p>
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center gap-1 text-yellow-400 text-sm">⭐ 4.7 <span class="text-gray-500">(1,560)</span></div>
+                            <a href="register.html" class="px-4 py-2 bg-blue-500/20 text-blue-400 rounded-lg text-sm font-medium hover:bg-blue-500/30 transition">Подробнее →</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Курс 5 -->
+                <div class="bg-gray-900/50 border border-gray-800 rounded-2xl overflow-hidden hover:border-blue-500/30 transition group">
+                    <div class="h-48 bg-gradient-to-br from-cyan-500/20 to-blue-500/20 flex items-center justify-center text-6xl">⚡</div>
+                    <div class="p-6">
+                        <div class="flex items-center gap-2 mb-3">
+                            <span class="px-3 py-1 bg-red-500/10 text-red-400 text-xs rounded-full font-medium">Продвинутый</span>
+                            <span class="text-gray-500 text-xs">⏱ 3 месяца</span>
+                        </div>
+                        <h3 class="text-lg font-semibold mb-2 group-hover:text-blue-400 transition">Автоматизация и скрипты</h3>
+                        <p class="text-gray-400 text-sm mb-4 line-clamp-2">Автоматизация рутины: парсинг, работа с файлами, Excel, email, планировщик задач.</p>
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center gap-1 text-yellow-400 text-sm">⭐ 4.8 <span class="text-gray-500">(780)</span></div>
+                            <a href="register.html" class="px-4 py-2 bg-blue-500/20 text-blue-400 rounded-lg text-sm font-medium hover:bg-blue-500/30 transition">Подробнее →</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Курс 6 -->
+                <div class="bg-gray-900/50 border border-gray-800 rounded-2xl overflow-hidden hover:border-blue-500/30 transition group">
+                    <div class="h-48 bg-gradient-to-br from-pink-500/20 to-purple-500/20 flex items-center justify-center text-6xl"></div>
+                    <div class="p-6">
+                        <div class="flex items-center gap-2 mb-3">
+                            <span class="px-3 py-1 bg-red-500/10 text-red-400 text-xs rounded-full font-medium">Продвинутый</span>
+                            <span class="text-gray-500 text-xs">⏱ 4 месяца</span>
+                        </div>
+                        <h3 class="text-lg font-semibold mb-2 group-hover:text-blue-400 transition">Кибербезопасность</h3>
+                        <p class="text-gray-400 text-sm mb-4 line-clamp-2">Тестирование на проникновение, анализ уязвимостей, написание эксплойтов на Python.</p>
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center gap-1 text-yellow-400 text-sm">⭐ 4.6 <span class="text-gray-500">(420)</span></div>
+                            <a href="register.html" class="px-4 py-2 bg-blue-500/20 text-blue-400 rounded-lg text-sm font-medium hover:bg-blue-500/30 transition">Подробнее →</a>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Футер -->
+    <footer class="border-t border-gray-800 py-8">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <p class="text-gray-500 text-sm">© 2026 PyMastery. Все права защищены.</p>
+        </div>
+    </footer>
+
+</body>
+</html>
