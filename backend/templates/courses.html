@@ -1,0 +1,93 @@
+{% extends 'base.html' %}
+
+{% block title %}Курсы — DanPy{% endblock %}
+
+{% block content %}
+<section class="pt-24 pb-12">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <h1 class="text-3xl sm:text-4xl font-bold mb-4">Наши курсы</h1>
+        <p class="text-gray-400 max-w-xl">Выберите направление и начните обучение в удобном темпе</p>
+
+        <!-- Фильтры -->
+        <form method="get" class="flex flex-wrap gap-3 mt-8">
+            <select name="category" class="px-5 py-2 bg-gray-800/50 text-gray-300 border border-gray-700 rounded-full text-sm hover:bg-gray-800 transition">
+                <option value="">Все категории</option>
+                {% for category in categories %}
+                <option value="{{ category.slug }}" {% if current_category == category.slug %}selected{% endif %}>
+                    {{ category.name }}
+                </option>
+                {% endfor %}
+            </select>
+
+            <select name="level" class="px-5 py-2 bg-gray-800/50 text-gray-300 border border-gray-700 rounded-full text-sm hover:bg-gray-800 transition">
+                <option value="">Все уровни</option>
+                <option value="beginner" {% if current_level == 'beginner' %}selected{% endif %}>Новичок</option>
+                <option value="intermediate" {% if current_level == 'intermediate' %}selected{% endif %}>Средний</option>
+                <option value="advanced" {% if current_level == 'advanced' %}selected{% endif %}>Продвинутый</option>
+            </select>
+
+            <input type="text" name="search" placeholder="Поиск курсов..." value="{{ search_query }}" 
+                class="px-5 py-2 bg-gray-800/50 text-white border border-gray-700 rounded-full text-sm focus:outline-none focus:border-blue-500">
+
+            <button type="submit" class="px-6 py-2 bg-blue-500/20 text-blue-400 border border-blue-500/30 rounded-full text-sm font-medium hover:bg-blue-500/30 transition">
+                Применить
+            </button>
+        </form>
+    </div>
+</section>
+
+<section class="pb-24">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {% for course in courses %}
+            <div class="bg-gray-900/50 border border-gray-800 rounded-2xl overflow-hidden hover:border-blue-500/30 transition group">
+                <div class="h-48 bg-gradient-to-br from-blue-500/20 to-purple-500/20 flex items-center justify-center text-6xl">
+                    {% if course.image %}
+                        <img src="{{ course.image.url }}" alt="{{ course.title }}" class="w-full h-full object-cover">
+                    {% else %}
+                        🐍
+                    {% endif %}
+                </div>
+                <div class="p-6">
+                    <div class="flex items-center gap-2 mb-3">
+                        <span class="px-3 py-1 bg-{{ course.get_level_badge_color }}-500/10 text-{{ course.get_level_badge_color }}-400 text-xs rounded-full font-medium">
+                            {{ course.get_level_display }}
+                        </span>
+                        <span class="text-gray-500 text-xs">⏱ {{ course.duration_months }} мес</span>
+                    </div>
+                    <h3 class="text-lg font-semibold mb-2 group-hover:text-blue-400 transition">{{ course.title }}</h3>
+                    <p class="text-gray-400 text-sm mb-4 line-clamp-2">{{ course.description }}</p>
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center gap-1 text-yellow-400 text-sm">⭐ {{ course.rating }} <span class="text-gray-500">({{ course.reviews_count }})</span></div>
+                        <a href="{% url 'courses:detail' course.slug %}" class="px-4 py-2 bg-blue-500/20 text-blue-400 rounded-lg text-sm font-medium hover:bg-blue-500/30 transition">Подробнее →</a>
+                    </div>
+                </div>
+            </div>
+            {% empty %}
+            <div class="col-span-3 text-center py-12">
+                <p class="text-gray-400 text-lg">Курсы не найдены</p>
+            </div>
+            {% endfor %}
+        </div>
+
+        <!-- Пагинация -->
+        {% if is_paginated %}
+        <div class="flex justify-center mt-12 gap-2">
+            {% if page_obj.has_previous %}
+            <a href="?page=1" class="px-4 py-2 bg-gray-800/50 border border-gray-700 rounded-lg hover:bg-gray-800 transition">Первая</a>
+            <a href="?page={{ page_obj.previous_page_number }}" class="px-4 py-2 bg-gray-800/50 border border-gray-700 rounded-lg hover:bg-gray-800 transition">← Назад</a>
+            {% endif %}
+
+            <span class="px-4 py-2 bg-blue-500/20 text-blue-400 border border-blue-500/30 rounded-lg">
+                Страница {{ page_obj.number }} из {{ page_obj.paginator.num_pages }}
+            </span>
+
+            {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}" class="px-4 py-2 bg-gray-800/50 border border-gray-700 rounded-lg hover:bg-gray-800 transition">Вперёд →</a>
+            <a href="?page={{ page_obj.paginator.num_pages }}" class="px-4 py-2 bg-gray-800/50 border border-gray-700 rounded-lg hover:bg-gray-800 transition">Последняя</a>
+            {% endif %}
+        </div>
+        {% endif %}
+    </div>
+</section>
+{% endblock %}

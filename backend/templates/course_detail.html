@@ -1,0 +1,137 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ course.title }} — DanPy{% endblock %}
+
+{% block content %}
+<section class="pt-24 pb-12">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <!-- Хлебные крошки -->
+        <nav class="flex items-center gap-2 text-sm text-gray-400 mb-8">
+            <a href="{% url 'index' %}" class="hover:text-blue-400 transition">Главная</a>
+            <span>/</span>
+            <a href="{% url 'courses:list' %}" class="hover:text-blue-400 transition">Курсы</a>
+            <span>/</span>
+            <span class="text-white">{{ course.title }}</span>
+        </nav>
+
+        <div class="grid lg:grid-cols-3 gap-8">
+            <!-- Основной контент -->
+            <div class="lg:col-span-2">
+                <div class="bg-gray-900/50 border border-gray-800 rounded-2xl overflow-hidden mb-8">
+                    <div class="h-64 bg-gradient-to-br from-blue-500/20 to-purple-500/20 flex items-center justify-center text-8xl">
+                        {% if course.image %}
+                            <img src="{{ course.image.url }}" alt="{{ course.title }}" class="w-full h-full object-cover">
+                        {% else %}
+                            🐍
+                        {% endif %}
+                    </div>
+                    <div class="p-8">
+                        <h1 class="text-3xl font-bold mb-4">{{ course.title }}</h1>
+                        <div class="flex items-center gap-4 mb-6">
+                            <span class="px-3 py-1 bg-{{ course.get_level_badge_color }}-500/10 text-{{ course.get_level_badge_color }}-400 text-sm rounded-full">
+                                {{ course.get_level_display }}
+                            </span>
+                            <span class="text-gray-400">⏱ {{ course.duration_months }} месяцев</span>
+                            <span class="text-gray-400">👥 {{ course.students_count }} студентов</span>
+                            <span class="text-yellow-400">⭐ {{ course.rating }} ({{ course.reviews_count }} отзывов)</span>
+                        </div>
+                        <p class="text-gray-300 leading-relaxed mb-6">{{ course.full_description|default:course.description }}</p>
+                    </div>
+                </div>
+
+                <!-- Программа курса -->
+                <div class="bg-gray-900/50 border border-gray-800 rounded-2xl p-8 mb-8">
+                    <h2 class="text-2xl font-bold mb-6">Программа курса</h2>
+                    <div class="space-y-4">
+                        {% for module in modules %}
+                        <div class="border border-gray-800 rounded-xl p-6 hover:border-blue-500/30 transition">
+                            <div class="flex items-start gap-4">
+                                <span class="flex-shrink-0 w-10 h-10 bg-blue-500/20 text-blue-400 rounded-lg flex items-center justify-center font-bold">{{ forloop.counter }}</span>
+                                <div class="flex-1">
+                                    <h3 class="text-lg font-semibold mb-2">{{ module.title }}</h3>
+                                    <p class="text-gray-400 text-sm mb-3">{{ module.description }}</p>
+                                    <div class="flex items-center gap-4 text-sm text-gray-500">
+                                        <span>📚 {{ module.lessons.count }} уроков</span>
+                                        <span> {{ module.duration_weeks }} недели</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {% empty %}
+                        <p class="text-gray-400">Программа курса скоро будет доступна</p>
+                        {% endfor %}
+                    </div>
+                </div>
+
+                <!-- Отзывы -->
+                <div class="bg-gray-900/50 border border-gray-800 rounded-2xl p-8">
+                    <h2 class="text-2xl font-bold mb-6">Отзывы студентов</h2>
+                    <div class="space-y-6">
+                        {% for review in reviews %}
+                        <div class="border-b border-gray-800 pb-6 last:border-0">
+                            <div class="flex items-center gap-3 mb-3">
+                                <div class="w-10 h-10 bg-gradient-to-br from-blue-400 to-purple-500 rounded-full flex items-center justify-center font-bold text-sm">
+                                    {{ review.user.first_name|first }}{{ review.user.last_name|first }}
+                                </div>
+                                <div>
+                                    <div class="font-medium">{{ review.user.get_full_name|default:review.user.username }}</div>
+                                    <div class="text-yellow-400 text-sm">{'⭐'|add:review.rating|add:'⭐' % review.rating}</div>
+                                </div>
+                            </div>
+                            <p class="text-gray-300">{{ review.text }}</p>
+                            <div class="text-gray-500 text-sm mt-2">{{ review.created_at|date:"d.m.Y" }}</div>
+                        </div>
+                        {% empty %}
+                        <p class="text-gray-400">Пока нет отзывов. Будьте первым!</p>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+
+            <!-- Боковая панель -->
+            <div class="lg:col-span-1">
+                <div class="bg-gray-900/50 border border-gray-800 rounded-2xl p-6 sticky top-24">
+                    <div class="text-3xl font-bold mb-2">
+                        {% if course.discount_price %}
+                            <span class="text-gray-500 line-through text-xl">{{ course.price }} ₽</span>
+                            <span class="text-blue-400">{{ course.discount_price }} ₽</span>
+                        {% else %}
+                            {{ course.price }} ₽
+                        {% endif %}
+                    </div>
+                    <p class="text-gray-400 text-sm mb-6">или {{ course.price|divisibleby:3|yesno:"4 990,9 990" }} ₽/мес на 3 мес</p>
+
+                    {% if user.is_authenticated %}
+                        {% if is_enrolled %}
+                            <button class="w-full py-3 bg-green-500/20 text-green-400 border border-green-500/30 rounded-xl font-semibold cursor-default">
+                                ✓ Вы записаны на курс
+                            </button>
+                            <a href="#" class="block text-center py-3 mt-3 bg-blue-500/20 text-blue-400 border border-blue-500/30 rounded-xl font-medium hover:bg-blue-500/30 transition">
+                                Перейти к обучению →
+                            </a>
+                        {% else %}
+                            <form method="post" action="{% url 'courses:enroll' course.id %}">
+                                {% csrf_token %}
+                                <button type="submit" class="w-full py-3 bg-gradient-to-r from-blue-500 to-purple-600 rounded-xl font-semibold hover:from-blue-600 hover:to-purple-700 transition shadow-lg shadow-blue-500/25">
+                                    Записаться на курс
+                                </button>
+                            </form>
+                        {% endif %}
+                    {% else %}
+                        <a href="{% url 'accounts:login' %}?next={{ request.path }}" class="block text-center py-3 bg-gradient-to-r from-blue-500 to-purple-600 rounded-xl font-semibold hover:from-blue-600 hover:to-purple-700 transition shadow-lg shadow-blue-500/25">
+                            Войти для записи
+                        </a>
+                    {% endif %}
+
+                    <ul class="space-y-3 mt-6 text-sm text-gray-400">
+                        <li class="flex items-center gap-2">✓ Доступ навсегда</li>
+                        <li class="flex items-center gap-2">✓ Сертификат по окончании</li>
+                        <li class="flex items-center gap-2">✓ Поддержка менторов</li>
+                        <li class="flex items-center gap-2">✓ Практические задания</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

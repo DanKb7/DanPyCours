@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block title %}Ошибка сервера — DanPy{% endblock %}
+
+{% block content %}
+<div class="min-h-screen flex items-center justify-center pt-16">
+    <div class="text-center">
+        <h1 class="text-9xl font-bold text-red-400 mb-4">500</h1>
+        <h2 class="text-3xl font-bold mb-4">Ошибка сервера</h2>
+        <p class="text-gray-400 mb-8 max-w-md mx-auto">
+            Что-то пошло не так на нашей стороне. Пожалуйста, попробуйте позже.
+        </p>
+        <a href="{% url 'index' %}" class="inline-block px-8 py-3 bg-gradient-to-r from-blue-500 to-purple-600 rounded-xl font-semibold hover:from-blue-600 hover:to-purple-700 transition shadow-lg shadow-blue-500/25">
+            Вернуться на главную
+        </a>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+
+{% block title %}О нас — DanPy{% endblock %}
+
+{% block content %}
+<section class="pt-24 pb-16">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-16">
+            <h1 class="text-3xl sm:text-5xl font-bold mb-6">
+                Мы учим <span class="bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent">кодить</span> и меняем жизни
+            </h1>
+            <p class="text-gray-400 text-lg max-w-2xl mx-auto leading-relaxed">
+                DanPy — это команда практикующих разработчиков, которые верят, что каждый может научиться программировать.
+            </p>
+        </div>
+
+        <!-- Статистика -->
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-6 mb-24">
+            <div class="text-center p-6 bg-gray-900/50 border border-gray-800 rounded-2xl">
+                <div class="text-4xl font-bold text-blue-400 mb-2">2022</div>
+                <div class="text-gray-500 text-sm">Год основания</div>
+            </div>
+            <div class="text-center p-6 bg-gray-900/50 border border-gray-800 rounded-2xl">
+                <div class="text-4xl font-bold text-purple-400 mb-2">12K+</div>
+                <div class="text-gray-500 text-sm">Выпускников</div>
+            </div>
+            <div class="text-center p-6 bg-gray-900/50 border border-gray-800 rounded-2xl">
+                <div class="text-4xl font-bold text-pink-400 mb-2">35+</div>
+                <div class="text-gray-500 text-sm">Менторов</div>
+            </div>
+            <div class="text-center p-6 bg-gray-900/50 border border-gray-800 rounded-2xl">
+                <div class="text-4xl font-bold text-green-400 mb-2">87%</div>
+                <div class="text-gray-500 text-sm">Трудоустроены</div>
+            </div>
+        </div>
+
+        <!-- Команда -->
+        <h2 class="text-2xl sm:text-3xl font-bold text-center mb-12">Наша команда</h2>
+        <div class="grid md:grid-cols-3 gap-8 max-w-4xl mx-auto">
+            <div class="text-center p-6">
+                <div class="w-24 h-24 bg-gradient-to-br from-blue-400 to-purple-500 rounded-full mx-auto mb-4 flex items-center justify-center text-3xl">👨💻</div>
+                <h3 class="font-semibold text-lg">Алексей Петров</h3>
+                <p class="text-blue-400 text-sm mb-2">Основатель & CEO</p>
+                <p class="text-gray-500 text-sm">10+ лет в разработке. Ex-Яндекс, Ex-VK.</p>
+            </div>
+            <div class="text-center p-6">
+                <div class="w-24 h-24 bg-gradient-to-br from-pink-400 to-red-500 rounded-full mx-auto mb-4 flex items-center justify-center text-3xl">👩💻</div>
+                <h3 class="font-semibold text-lg">Елена Смирнова</h3>
+                <p class="text-pink-400 text-sm mb-2">Head of Education</p>
+                <p class="text-gray-500 text-sm">Разработала методику обучения.</p>
+            </div>
+            <div class="text-center p-6">
+                <div class="w-24 h-24 bg-gradient-to-br from-green-400 to-cyan-500 rounded-full mx-auto mb-4 flex items-center justify-center text-3xl">‍💻</div>
+                <h3 class="font-semibold text-lg">Дмитрий Козлов</h3>
+                <p class="text-green-400 text-sm mb-2">Lead Mentor</p>
+                <p class="text-gray-500 text-sm">Senior Python Developer.</p>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

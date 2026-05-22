@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="ru" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}DanPy — Курсы Python с нуля до PRO{% endblock %}</title>
+    <meta name="description" content="{% block meta_description %}Научись программировать на Python{% endblock %}">
+    
+    {% load static %}
+    <link href="{% static 'dist/output.css' %}" rel="stylesheet">
+    
+    {% block extra_css %}{% endblock %}
+</head>
+<body class="bg-gray-950 text-white font-sans">
+
+    <!-- НАВИГАЦИЯ -->
+    <nav class="fixed top-0 w-full z-50 bg-gray-950/80 backdrop-blur-xl border-b border-gray-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <a href="{% url 'index' %}" class="flex items-center gap-2">
+                    <span class="text-3xl">🐍</span>
+                    <span class="text-xl font-bold bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent">
+                        DanPy
+                    </span>
+                </a>
+
+                <div class="hidden md:flex items-center gap-8">
+                    <a href="{% url 'index' %}" class="{% if request.resolver_match.url_name == 'index' %}text-blue-400 font-medium{% else %}text-gray-300 hover:text-blue-400 transition{% endif %}">
+                        Главная
+                    </a>
+                    <a href="{% url 'courses:list' %}" class="text-gray-300 hover:text-blue-400 transition">Курсы</a>
+                    <a href="{% url 'about' %}" class="text-gray-300 hover:text-blue-400 transition">О нас</a>
+                </div>
+
+                <div class="flex items-center gap-3">
+                    {% if user.is_authenticated %}
+                        <a href="{% url 'accounts:profile' %}" class="hidden sm:block px-4 py-2 text-gray-300 hover:text-white transition">
+                            Профиль
+                        </a>
+                        <a href="{% url 'accounts:logout' %}" class="px-5 py-2 bg-gradient-to-r from-blue-500 to-purple-600 rounded-lg font-medium hover:from-blue-600 hover:to-purple-700 transition shadow-lg shadow-blue-500/25">
+                            Выйти
+                        </a>
+                    {% else %}
+                        <a href="{% url 'accounts:login' %}" class="hidden sm:block px-4 py-2 text-gray-300 hover:text-white transition">
+                            Войти
+                        </a>
+                        <a href="{% url 'accounts:register' %}" class="px-5 py-2 bg-gradient-to-r from-blue-500 to-purple-600 rounded-lg font-medium hover:from-blue-600 hover:to-purple-700 transition shadow-lg shadow-blue-500/25">
+                            Регистрация
+                        </a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- СООБЩЕНИЯ -->
+    {% if messages %}
+    <div class="fixed top-20 right-4 z-50 space-y-2">
+        {% for message in messages %}
+        <div class="px-6 py-3 rounded-lg shadow-lg transform transition-all duration-300 
+            {% if message.tags == 'success' %}bg-green-500/90 text-white
+            {% elif message.tags == 'error' %}bg-red-500/90 text-white
+            {% elif message.tags == 'warning' %}bg-yellow-500/90 text-white
+            {% else %}bg-blue-500/90 text-white{% endif %}">
+            {{ message }}
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+
+    <!-- ОСНОВНОЙ КОНТЕНТ -->
+    <main class="pt-16">
+        {% block content %}{% endblock %}
+    </main>
+
+    <!-- ФУТЕР -->
+    <footer class="border-t border-gray-800 py-12 mt-24">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid md:grid-cols-4 gap-8 mb-8">
+                <div>
+                    <a href="{% url 'index' %}" class="flex items-center gap-2 mb-4">
+                        <span class="text-2xl"></span>
+                        <span class="text-lg font-bold bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent">DanPy</span>
+                    </a>
+                    <p class="text-gray-500 text-sm leading-relaxed">
+                        Образовательная платформа для изучения Python с нуля до профессионального уровня.
+                    </p>
+                </div>
+                <div>
+                    <h4 class="font-semibold mb-4">Обучение</h4>
+                    <ul class="space-y-2 text-sm text-gray-400">
+                        <li><a href="{% url 'courses:list' %}" class="hover:text-blue-400 transition">Курсы</a></li>
+                        <li><a href="#" class="hover:text-blue-400 transition">Вебинары</a></li>
+                        <li><a href="#" class="hover:text-blue-400 transition">Блог</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-semibold mb-4">Компания</h4>
+                    <ul class="space-y-2 text-sm text-gray-400">
+                        <li><a href="{% url 'about' %}" class="hover:text-blue-400 transition">О нас</a></li>
+                        <li><a href="#" class="hover:text-blue-400 transition">Карьера</a></li>
+                        <li><a href="#" class="hover:text-blue-400 transition">Контакты</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-semibold mb-4">Поддержка</h4>
+                    <ul class="space-y-2 text-sm text-gray-400">
+                        <li><a href="#" class="hover:text-blue-400 transition">FAQ</a></li>
+                        <li><a href="mailto:support@danpy.ru" class="hover:text-blue-400 transition">support@danpy.ru</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-gray-800 pt-8 flex flex-col sm:flex-row items-center justify-between gap-4">
+                <p class="text-gray-500 text-sm">© {% now "Y" %} DanPy. Все права защищены.</p>
+                <div class="flex items-center gap-4">
+                    <a href="#" class="text-gray-500 hover:text-blue-400 transition">Telegram</a>
+                    <a href="#" class="text-gray-500 hover:text-blue-400 transition">YouTube</a>
+                    <a href="#" class="text-gray-500 hover:text-blue-400 transition">GitHub</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    {% block extra_js %}{% endblock %}
+</body>
+</html>
