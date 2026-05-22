@@ -3,99 +3,111 @@
 {% block title %}Профиль — DanPy{% endblock %}
 
 {% block content %}
-<section class="pt-24 pb-12">
+<section class="pt-24 pb-16 min-h-screen bg-gray-950">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <h1 class="text-3xl font-bold mb-8">Мой профиль</h1>
+        <h1 class="text-3xl font-bold mb-8 text-white">Мой профиль</h1>
 
         <div class="grid lg:grid-cols-3 gap-8">
             <!-- Форма профиля -->
             <div class="lg:col-span-2">
-                <div class="bg-gray-900/50 border border-gray-800 rounded-2xl p-8 mb-8">
-                    <h2 class="text-xl font-semibold mb-6">Личная информация</h2>
-                    <form method="post" enctype="multipart/form-data" class="space-y-5">
+                <div class="bg-gray-900/40 border border-gray-800 rounded-2xl p-8 backdrop-blur-sm shadow-xl">
+                    <h2 class="text-xl font-semibold mb-6 text-white flex items-center gap-2">
+                        <span class="w-1 h-6 bg-blue-500 rounded-full"></span>
+                        Личная информация
+                    </h2>
+                    <form method="post" enctype="multipart/form-data" class="space-y-6">
                         {% csrf_token %}
                         
-                        <div class="grid md:grid-cols-2 gap-5">
+                        <div class="grid md:grid-cols-2 gap-6">
                             <div>
                                 <label class="block text-sm font-medium text-gray-300 mb-2">Имя</label>
                                 {{ form.first_name }}
                                 {% if form.first_name.errors %}
-                                    <p class="text-red-400 text-sm mt-1">{{ form.first_name.errors.0 }}</p>
+                                    <p class="text-red-400 text-xs mt-1.5">{{ form.first_name.errors.0 }}</p>
                                 {% endif %}
                             </div>
                             <div>
                                 <label class="block text-sm font-medium text-gray-300 mb-2">Фамилия</label>
                                 {{ form.last_name }}
                                 {% if form.last_name.errors %}
-                                    <p class="text-red-400 text-sm mt-1">{{ form.last_name.errors.0 }}</p>
+                                    <p class="text-red-400 text-xs mt-1.5">{{ form.last_name.errors.0 }}</p>
                                 {% endif %}
                             </div>
                         </div>
 
-                        <div>
-                            <label class="block text-sm font-medium text-gray-300 mb-2">Email</label>
-                            {{ form.email }}
-                            {% if form.email.errors %}
-                                <p class="text-red-400 text-sm mt-1">{{ form.email.errors.0 }}</p>
-                            {% endif %}
-                        </div>
-
-                        <div>
-                            <label class="block text-sm font-medium text-gray-300 mb-2">Телефон</label>
-                            {{ form.phone }}
-                            {% if form.phone.errors %}
-                                <p class="text-red-400 text-sm mt-1">{{ form.phone.errors.0 }}</p>
-                            {% endif %}
+                        <div class="grid md:grid-cols-2 gap-6">
+                            <div>
+                                <label class="block text-sm font-medium text-gray-300 mb-2">Email</label>
+                                {{ form.email }}
+                                {% if form.email.errors %}
+                                    <p class="text-red-400 text-xs mt-1.5">{{ form.email.errors.0 }}</p>
+                                {% endif %}
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-300 mb-2">Телефон</label>
+                                {{ form.phone }}
+                                {% if form.phone.errors %}
+                                    <p class="text-red-400 text-xs mt-1.5">{{ form.phone.errors.0 }}</p>
+                                {% endif %}
+                            </div>
                         </div>
 
                         <div>
                             <label class="block text-sm font-medium text-gray-300 mb-2">О себе</label>
                             {{ form.bio }}
                             {% if form.bio.errors %}
-                                <p class="text-red-400 text-sm mt-1">{{ form.bio.errors.0 }}</p>
+                                <p class="text-red-400 text-xs mt-1.5">{{ form.bio.errors.0 }}</p>
                             {% endif %}
                         </div>
 
                         <div>
                             <label class="block text-sm font-medium text-gray-300 mb-2">Аватар</label>
                             {{ form.avatar }}
+                            <p class="text-gray-500 text-xs mt-1.5">JPG, PNG. Максимум 5MB.</p>
                             {% if form.avatar.errors %}
-                                <p class="text-red-400 text-sm mt-1">{{ form.avatar.errors.0 }}</p>
+                                <p class="text-red-400 text-xs mt-1.5">{{ form.avatar.errors.0 }}</p>
                             {% endif %}
                         </div>
 
-                        <button type="submit" class="px-6 py-3 bg-gradient-to-r from-blue-500 to-purple-600 rounded-xl font-semibold hover:from-blue-600 hover:to-purple-700 transition shadow-lg shadow-blue-500/25">
-                            Сохранить изменения
-                        </button>
+                        <div class="pt-4">
+                            <button type="submit" class="px-8 py-3.5 bg-gradient-to-r from-blue-500 to-purple-600 rounded-xl font-semibold text-white hover:from-blue-600 hover:to-purple-700 transition-all duration-200 shadow-lg shadow-blue-500/20 transform hover:-translate-y-0.5">
+                                Сохранить изменения
+                            </button>
+                        </div>
                     </form>
                 </div>
             </div>
 
             <!-- Мои курсы -->
             <div class="lg:col-span-1">
-                <div class="bg-gray-900/50 border border-gray-800 rounded-2xl p-6">
-                    <h2 class="text-xl font-semibold mb-6">Мои курсы</h2>
+                <div class="bg-gray-900/40 border border-gray-800 rounded-2xl p-6 backdrop-blur-sm sticky top-24">
+                    <h2 class="text-xl font-semibold mb-6 text-white flex items-center gap-2">
+                        <span class="w-1 h-6 bg-purple-500 rounded-full"></span>
+                        Мои курсы
+                    </h2>
                     <div class="space-y-4">
                         {% for enrollment in enrollments %}
-                        <div class="border border-gray-800 rounded-xl p-4 hover:border-blue-500/30 transition">
-                            <h3 class="font-medium mb-2">{{ enrollment.course.title }}</h3>
-                            <div class="flex items-center justify-between text-sm">
+                        <div class="border border-gray-800 rounded-xl p-4 hover:border-blue-500/30 transition bg-gray-800/20">
+                            <h3 class="font-medium mb-2 text-white">{{ enrollment.course.title }}</h3>
+                            <div class="flex items-center justify-between text-sm mb-2">
                                 <span class="text-gray-400">
-                                    {% if enrollment.status == 'enrolled' %}Записан
-                                    {% elif enrollment.status == 'in_progress' %}Проходит
-                                    {% else %}Завершил{% endif %}
+                                    {% if enrollment.status == 'enrolled' %} Записан
+                                    {% elif enrollment.status == 'in_progress' %}🔄 Проходит
+                                    {% else %}✅ Завершил{% endif %}
                                 </span>
-                                <span class="text-blue-400">{{ enrollment.progress }}%</span>
+                                <span class="text-blue-400 font-medium">{{ enrollment.progress }}%</span>
                             </div>
-                            <div class="w-full bg-gray-800 rounded-full h-2 mt-2">
-                                <div class="bg-gradient-to-r from-blue-500 to-purple-600 h-2 rounded-full" style="width: {{ enrollment.progress }}%"></div>
+                            <div class="w-full bg-gray-800 rounded-full h-1.5 overflow-hidden">
+                                <div class="bg-gradient-to-r from-blue-500 to-purple-600 h-1.5 rounded-full transition-all duration-500" style="width: {{ enrollment.progress }}%"></div>
                             </div>
                         </div>
                         {% empty %}
-                        <p class="text-gray-400 text-center py-4">У вас пока нет курсов</p>
-                        <a href="{% url 'courses:list' %}" class="block text-center py-2 bg-blue-500/20 text-blue-400 rounded-lg text-sm hover:bg-blue-500/30 transition">
-                            Смотреть курсы →
-                        </a>
+                        <div class="text-center py-8 bg-gray-800/20 rounded-xl border border-dashed border-gray-700">
+                            <p class="text-gray-400 mb-4 text-sm">Вы ещё не записаны на курсы</p>
+                            <a href="{% url 'courses:list' %}" class="inline-flex items-center gap-2 px-5 py-2.5 bg-blue-500/10 text-blue-400 border border-blue-500/30 rounded-lg text-sm font-medium hover:bg-blue-500/20 transition">
+                                Выбрать курс →
+                            </a>
+                        </div>
                         {% endfor %}
                     </div>
                 </div>

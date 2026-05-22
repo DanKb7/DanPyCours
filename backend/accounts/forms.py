@@ -54,15 +54,32 @@ class CustomAuthenticationForm(AuthenticationForm):
     }))
 
 class UserProfileForm(forms.ModelForm):
-    """Форма профиля пользователя"""
     class Meta:
         model = User
         fields = ('first_name', 'last_name', 'email', 'phone', 'bio', 'avatar')
         widgets = {
-            'first_name': forms.TextInput(attrs={'class': 'form-input'}),
-            'last_name': forms.TextInput(attrs={'class': 'form-input'}),
-            'email': forms.EmailInput(attrs={'class': 'form-input'}),
-            'phone': forms.TextInput(attrs={'class': 'form-input'}),
-            'bio': forms.Textarea(attrs={'class': 'form-textarea', 'rows': 4}),
-            'avatar': forms.FileInput(attrs={'class': 'form-file'}),
+            'first_name': forms.TextInput(attrs={
+                'class': 'w-full px-4 py-3 bg-gray-800/60 border border-gray-700 rounded-xl text-black placeholder-gray-400 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500/50 transition-all duration-200',
+                'placeholder': 'Введите имя'
+            }),
+            'last_name': forms.TextInput(attrs={
+                'class': 'w-full px-4 py-3 bg-gray-800/60 border border-gray-700 rounded-xl text-black placeholder-gray-400 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500/50 transition-all duration-200',
+                'placeholder': 'Введите фамилию'
+            }),
+            'email': forms.EmailInput(attrs={
+                'class': 'w-full px-4 py-3 bg-gray-800/60 border border-gray-700 rounded-xl text-black placeholder-gray-400 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500/50 transition-all duration-200',
+                'placeholder': 'example@mail.com'
+            }),
+            'phone': forms.TextInput(attrs={
+                'class': 'w-full px-4 py-3 bg-gray-800/60 border border-gray-700 rounded-xl text-black placeholder-gray-400 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500/50 transition-all duration-200',
+                'placeholder': '+7 (999) 000-00-00'
+            }),
+            'bio': forms.Textarea(attrs={
+                'class': 'w-full px-4 py-3 bg-gray-800/60 border border-gray-700 rounded-xl text-black placeholder-gray-400 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500/50 transition-all duration-200 resize-none',
+                'rows': 4,
+                'placeholder': 'Расскажите немного о себе...'
+            }),
+            'avatar': forms.FileInput(attrs={
+                'class': 'block w-full text-sm text-gray-400 file:mr-4 file:py-2.5 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-medium file:bg-blue-500/20 file:text-blue-400 hover:file:bg-blue-500/30 file:cursor-pointer cursor-pointer'
+            }),
         }

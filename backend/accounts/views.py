@@ -53,13 +53,13 @@ def logout_view(request):
 
 @login_required
 def profile_view(request):
-    """Профиль пользователя"""
     if request.method == 'POST':
         form = UserProfileForm(request.POST, request.FILES, instance=request.user)
         if form.is_valid():
             form.save()
             messages.success(request, 'Профиль успешно обновлен!')
-            return redirect('profile')
+            return redirect('accounts:profile') 
+
     else:
         form = UserProfileForm(instance=request.user)
     
