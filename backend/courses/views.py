@@ -3,7 +3,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.db.models import Q, Avg, Count
 from django.views.generic import ListView, DetailView
-from .models import Course, Category, Enrollment, Review
+from .models import Course, Category, Enrollment, Review, UserLessonProgress, Module, Lesson
 
 def index_view(request):
     """Главная страница"""
@@ -130,11 +130,138 @@ def enroll_course(request, course_id):
         messages.success(request, f'Вы успешно записались на курс "{course.title}"')
         course.students_count += 1
         course.save()
+        # Перенаправляем на страницу обучения
+        return redirect('courses:learning', slug=course.slug)
     else:
         messages.info(request, 'Вы уже записаны на этот курс')
-    
-    return redirect('course_detail', slug=course.slug)
+        return redirect('courses:learning', slug=course.slug)
 
 def about_view(request):
     """Страница о нас"""
     return render(request, 'about.html')
+
+@login_required
+def course_learning(request, slug):
+    """Страница обучения - список уроков курса"""
+    course = get_object_or_404(Course, slug=slug, is_published=True)
+    
+    # Проверяем, записан ли пользователь
+    enrollment = get_object_or_404(Enrollment, user=request.user, course=course)
+    
+    # Получаем все модули и уроки
+    modules = course.modules.prefetch_related('lessons').all()
+    
+    # Получаем прогресс пользователя
+    user_progress = UserLessonProgress.objects.filter(
+        user=request.user,
+        lesson__module__course=course
+    ).select_related('lesson')
+    
+    # Создаем словарь прогресса
+    progress_dict = {p.lesson.id: p.status for p in user_progress}
+    
+    # Считаем общий прогресс
+    total_lessons = Lesson.objects.filter(module__course=course).count()
+    completed_lessons = UserLessonProgress.objects.filter(
+        user=request.user,
+        lesson__module__course=course,
+        status='completed'
+    ).count()
+    
+    progress_percentage = int((completed_lessons / total_lessons * 100)) if total_lessons > 0 else 0
+    
+    # Обновляем прогресс записи
+    if enrollment.progress != progress_percentage:
+        enrollment.progress = progress_percentage
+        if progress_percentage == 100:
+            enrollment.status = 'completed'
+            enrollment.completed_at = timezone.now()
+        elif progress_percentage > 0:
+            enrollment.status = 'in_progress'
+        enrollment.save()
+    
+    context = {
+        'course': course,
+        'modules': modules,
+        'progress_dict': progress_dict,
+        'total_lessons': total_lessons,
+        'completed_lessons': completed_lessons,
+        'progress_percentage': progress_percentage,
+        'enrollment': enrollment,
+    }
+    return render(request, 'course_learning.html', context)
+
+@login_required
+def lesson_detail(request, course_slug, lesson_id):
+    """Страница конкретного урока"""
+    course = get_object_or_404(Course, slug=course_slug, is_published=True)
+    lesson = get_object_or_404(Lesson, id=lesson_id, module__course=course)
+    
+    # Проверяем, записан ли пользователь
+    get_object_or_404(Enrollment, user=request.user, course=course)
+    
+    # Получаем или создаем прогресс
+    progress, created = UserLessonProgress.objects.get_or_create(
+        user=request.user,
+        lesson=lesson,
+        defaults={'status': 'in_progress'}
+    )
+    
+    # Получаем предыдущий и следующий урок
+    all_lessons = Lesson.objects.filter(module__course=course).order_by('module__order', 'order')
+    lesson_list = list(all_lessons)
+    current_index = lesson_list.index(lesson)
+    
+    prev_lesson = lesson_list[current_index - 1] if current_index > 0 else None
+    next_lesson = lesson_list[current_index + 1] if current_index < len(lesson_list) - 1 else None
+    
+    # Получаем все модули для навигации
+    modules = course.modules.prefetch_related('lessons').all()
+    
+    # Получаем прогресс по всем урокам
+    user_progress = UserLessonProgress.objects.filter(
+        user=request.user,
+        lesson__module__course=course
+    ).select_related('lesson')
+    
+    progress_dict = {p.lesson.id: p.status for p in user_progress}
+    
+    context = {
+        'course': course,
+        'lesson': lesson,
+        'progress': progress,
+        'prev_lesson': prev_lesson,
+        'next_lesson': next_lesson,
+        'modules': modules,
+        'progress_dict': progress_dict,
+    }
+    return render(request, 'lesson_detail.html', context)
+
+@login_required
+def mark_lesson_complete(request, lesson_id):
+    """Отметить урок как пройденный"""
+    lesson = get_object_or_404(Lesson, id=lesson_id)
+    course = lesson.module.course
+    
+    # Проверяем, записан ли пользователь
+    get_object_or_404(Enrollment, user=request.user, course=course)
+    
+    # Обновляем прогресс
+    progress, created = UserLessonProgress.objects.get_or_create(
+        user=request.user,
+        lesson=lesson,
+        defaults={'status': 'completed', 'completed_at': timezone.now()}
+    )
+    
+    if not created:
+        progress.status = 'completed'
+        progress.completed_at = timezone.now()
+        progress.save()
+    
+    # Если запрос AJAX
+    if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
+        return JsonResponse({'status': 'success', 'message': 'Урок пройден!'})
+    
+    # Иначе редирект
+    messages.success(request, f'Урок "{lesson.title}" отмечен как пройденный!')
+    return redirect('courses:lesson_detail', course_slug=course.slug, lesson_id=lesson.id)

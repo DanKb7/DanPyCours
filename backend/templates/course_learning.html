@@ -1,0 +1,130 @@
+{% extends 'base.html' %}
+{% load course_filters %}
+
+{% block title %}{{ course.title }} — Обучение — DanPy{% endblock %}
+<section class="pt-24 pb-12 min-h-screen">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <!-- Заголовок -->
+        <div class="mb-8">
+            <nav class="flex items-center gap-2 text-sm text-gray-400 mb-4">
+                <a href="{% url 'index' %}" class="hover:text-blue-400 transition">Главная</a>
+                <span>/</span>
+                <a href="{% url 'courses:list' %}" class="hover:text-blue-400 transition">Курсы</a>
+                <span>/</span>
+                <span class="text-white">{{ course.title }}</span>
+            </nav>
+            
+            <h1 class="text-3xl font-bold text-white mb-4">{{ course.title }}</h1>
+            
+            <!-- Прогресс -->
+            <div class="bg-gray-900/50 border border-gray-800 rounded-xl p-6">
+                <div class="flex items-center justify-between mb-3">
+                    <div>
+                        <p class="text-gray-300 font-medium">Ваш прогресс</p>
+                        <p class="text-gray-400 text-sm">{{ completed_lessons }} из {{ total_lessons }} уроков пройдено</p>
+                    </div>
+                    <div class="text-right">
+                        <p class="text-2xl font-bold text-blue-400">{{ progress_percentage }}%</p>
+                    </div>
+                </div>
+                <div class="w-full bg-gray-800 rounded-full h-3 overflow-hidden">
+                    <div class="bg-gradient-to-r from-blue-500 to-purple-600 h-3 rounded-full transition-all duration-500" 
+                         style="width: {{ progress_percentage }}%"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="grid lg:grid-cols-4 gap-8">
+            <!-- Список модулей -->
+            <div class="lg:col-span-3">
+                <div class="space-y-6">
+                    {% for module in modules %}
+                    <div class="bg-gray-900/50 border border-gray-800 rounded-2xl overflow-hidden">
+                        <div class="p-6 border-b border-gray-800">
+                            <div class="flex items-center gap-3">
+                                <span class="w-8 h-8 bg-blue-500/20 text-blue-400 rounded-lg flex items-center justify-center font-bold text-sm">
+                                    {{ forloop.counter }}
+                                </span>
+                                <div>
+                                    <h3 class="text-lg font-semibold text-white">{{ module.title }}</h3>
+                                    <p class="text-gray-400 text-sm">{{ module.lessons.count }} уроков • {{ module.duration_weeks }} недели</p>
+                                </div>
+                            </div>
+                            {% if module.description %}
+                            <p class="text-gray-400 text-sm mt-3 ml-11">{{ module.description }}</p>
+                            {% endif %}
+                        </div>
+                        
+                        <div class="divide-y divide-gray-800">
+                            {% for lesson in module.lessons.all %}
+                            <a href="{% url 'courses:lesson_detail' course_slug=course.slug lesson_id=lesson.id %}" 
+                               class="flex items-center gap-4 p-4 hover:bg-gray-800/50 transition group {% if progress_dict|get:lesson.id == 'completed' %}bg-green-500/5{% endif %}">
+                                <!-- Статус -->
+                                <div class="flex-shrink-0">
+                                    {% if progress_dict|get:lesson.id == 'completed' %}
+                                        <span class="w-6 h-6 bg-green-500 rounded-full flex items-center justify-center">
+                                            <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                                            </svg>
+                                        </span>
+                                    {% elif progress_dict|get:lesson.id == 'in_progress' %}
+                                        <span class="w-6 h-6 bg-yellow-500 rounded-full flex items-center justify-center">
+                                            <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                            </svg>
+                                        </span>
+                                    {% else %}
+                                        <span class="w-6 h-6 bg-gray-700 rounded-full flex items-center justify-center">
+                                            <span class="text-xs text-gray-400">{{ forloop.counter }}</span>
+                                        </span>
+                                    {% endif %}
+                                </div>
+                                
+                                <!-- Инфо урока -->
+                                <div class="flex-1">
+                                    <h4 class="text-white font-medium group-hover:text-blue-400 transition">{{ lesson.title }}</h4>
+                                    <p class="text-gray-400 text-sm">{{ lesson.duration_minutes }} мин</p>
+                                </div>
+                                
+                                <!-- Стрелка -->
+                                <svg class="w-5 h-5 text-gray-600 group-hover:text-blue-400 transition" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                                </svg>
+                            </a>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <!-- Боковая панель -->
+            <div class="lg:col-span-1">
+                <div class="bg-gray-900/50 border border-gray-800 rounded-2xl p-6 sticky top-24">
+                    <h3 class="text-lg font-semibold text-white mb-4">Информация</h3>
+                    
+                    <div class="space-y-4 text-sm">
+                        <div class="flex items-center gap-3 text-gray-300">
+                            <span class="text-blue-400">📚</span>
+                            <span>{{ total_lessons }} уроков</span>
+                        </div>
+                        <div class="flex items-center gap-3 text-gray-300">
+                            <span class="text-purple-400">⏱</span>
+                            <span>{{ course.duration_months }} месяцев</span>
+                        </div>
+                        <div class="flex items-center gap-3 text-gray-300">
+                            <span class="text-yellow-400">⭐</span>
+                            <span>{{ course.rating }} рейтинг</span>
+                        </div>
+                    </div>
+                    
+                    <div class="border-t border-gray-800 mt-6 pt-6">
+                        <a href="{% url 'courses:detail' course.slug %}" class="block text-center py-2.5 text-blue-400 border border-blue-500/30 rounded-lg hover:bg-blue-500/10 transition text-sm font-medium">
+                            ← На страницу курса
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
