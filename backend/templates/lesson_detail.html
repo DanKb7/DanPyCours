@@ -5,7 +5,6 @@
 {% block content %}
 <section class="pt-24 pb-12 min-h-screen">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <!-- Навигация -->
         <nav class="flex items-center gap-2 text-sm text-gray-400 mb-6">
             <a href="{% url 'index' %}" class="hover:text-blue-400 transition">Главная</a>
             <span>/</span>
@@ -15,9 +14,7 @@
         </nav>
 
         <div class="grid lg:grid-cols-4 gap-8">
-            <!-- Основной контент урока -->
             <div class="lg:col-span-3">
-                <!-- Видео/Контент -->
                 <div class="bg-gray-900/50 border border-gray-800 rounded-2xl overflow-hidden mb-6">
                     {% if lesson.video_url %}
                     <div class="aspect-video bg-gray-950">
@@ -38,7 +35,6 @@
                     {% endif %}
                 </div>
 
-                <!-- Информация об уроке -->
                 <div class="bg-gray-900/50 border border-gray-800 rounded-2xl p-8 mb-6">
                     <div class="flex items-start justify-between mb-6">
                         <div>
@@ -46,7 +42,6 @@
                             <p class="text-gray-400">{{ lesson.duration_minutes }} минут • {{ lesson.module.title }}</p>
                         </div>
                         
-                        <!-- Кнопка отметить как пройденный -->
                         <form method="post" action="{% url 'courses:mark_complete' lesson.id %}" id="complete-form">
                             {% csrf_token %}
                             <button type="submit" 
@@ -74,7 +69,6 @@
                     {% endif %}
                 </div>
 
-                <!-- Навигация между уроками -->
                 <div class="flex items-center justify-between gap-4">
                     {% if prev_lesson %}
                     <a href="{% url 'courses:lesson_detail' course_slug=course.slug lesson_id=prev_lesson.id %}" 
@@ -100,8 +94,6 @@
                     {% endif %}
                 </div>
             </div>
-
-            <!-- Боковая панель с программой -->
             <div class="lg:col-span-1">
                 <div class="bg-gray-900/50 border border-gray-800 rounded-2xl p-6 sticky top-24 max-h-[calc(100vh-8rem)] overflow-y-auto">
                     <h3 class="text-lg font-semibold text-white mb-4">Программа курса</h3>
@@ -137,7 +129,6 @@
 </section>
 
 <script>
-// Обработка отметки урока как пройденного
 document.getElementById('complete-form').addEventListener('submit', function(e) {
     e.preventDefault();
     

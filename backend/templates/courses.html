@@ -8,7 +8,6 @@
         <h1 class="text-3xl sm:text-4xl font-bold mb-4">Наши курсы</h1>
         <p class="text-gray-400 max-w-xl">Выберите направление и начните обучение в удобном темпе</p>
 
-        <!-- Фильтры -->
         <form method="get" class="flex flex-wrap gap-3 mt-8">
             <select name="category" class="px-5 py-2 bg-gray-800/50 text-gray-300 border border-gray-700 rounded-full text-sm hover:bg-gray-800 transition">
                 <option value="">Все категории</option>
@@ -70,7 +69,6 @@
             {% endfor %}
         </div>
 
-        <!-- Пагинация -->
         {% if is_paginated %}
         <div class="flex justify-center mt-12 gap-2">
             {% if page_obj.has_previous %}

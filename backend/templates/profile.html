@@ -8,7 +8,6 @@
         <h1 class="text-3xl font-bold mb-8 text-white">Мой профиль</h1>
 
         <div class="grid lg:grid-cols-3 gap-8">
-            <!-- Форма профиля -->
             <div class="lg:col-span-2">
                 <div class="bg-gray-900/40 border border-gray-800 rounded-2xl p-8 backdrop-blur-sm shadow-xl">
                     <h2 class="text-xl font-semibold mb-6 text-white flex items-center gap-2">
@@ -20,7 +19,7 @@
                         
                         <div class="grid md:grid-cols-2 gap-6">
                             <div>
-                                <label class="block text-sm font-medium text-gray-300 mb-2">Имя</label>
+                                <label class="block text-sm font-medium text-gray-300 mb-2 ">Имя</label>
                                 {{ form.first_name }}
                                 {% if form.first_name.errors %}
                                     <p class="text-red-400 text-xs mt-1.5">{{ form.first_name.errors.0 }}</p>
@@ -60,7 +59,7 @@
                             {% endif %}
                         </div>
 
-                        <div>
+                        <div class="flex justify-center items-start flex-col">
                             <label class="block text-sm font-medium text-gray-300 mb-2">Аватар</label>
                             {{ form.avatar }}
                             <p class="text-gray-500 text-xs mt-1.5">JPG, PNG. Максимум 5MB.</p>
@@ -78,7 +77,6 @@
                 </div>
             </div>
 
-            <!-- Мои курсы -->
             <div class="lg:col-span-1">
                 <div class="bg-gray-900/40 border border-gray-800 rounded-2xl p-6 backdrop-blur-sm sticky top-24">
                     <h2 class="text-xl font-semibold mb-6 text-white flex items-center gap-2">
@@ -115,4 +113,13 @@
         </div>
     </div>
 </section>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const inputs = document.querySelectorAll('input[type="text"], input[type="email"], input[type="tel"], textarea');
+    inputs.forEach(input => {
+        input.style.color = '#111827'; 
+        input.style.backgroundColor = '#ffffff'; 
+    });
+});
+</script>
 {% endblock %}

@@ -46,7 +46,6 @@ def login_view(request):
 
 @login_required
 def logout_view(request):
-    """Выход пользователя"""
     logout(request)
     messages.info(request, 'Вы успешно вышли из системы')
     return redirect('index')

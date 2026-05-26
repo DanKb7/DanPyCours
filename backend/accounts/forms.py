@@ -4,20 +4,19 @@ from django.contrib.auth import authenticate
 from .models import User
 
 class CustomUserCreationForm(UserCreationForm):
-    """Форма регистрации"""
     email = forms.EmailField(required=True, 
                             widget=forms.EmailInput(attrs={
-                                'class': 'w-full px-4 py-3 bg-gray-800/50 border border-gray-700 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition',
+                                'class': 'w-full px-4 py-3 bg-gray-800/50 border border-gray-700 rounded-xl text-black  placeholder-gray-500 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition',
                                 'placeholder': 'your@email.com'
                             }))
     first_name = forms.CharField(required=True,
                                 widget=forms.TextInput(attrs={
-                                    'class': 'w-full px-4 py-3 bg-gray-800/50 border border-gray-700 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition',
+                                    'class': 'w-full px-4 py-3 bg-gray-800/50 border border-gray-700 rounded-xl text-black placeholder-gray-500 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition',
                                     'placeholder': 'Иван'
                                 }))
     last_name = forms.CharField(required=True,
                                widget=forms.TextInput(attrs={
-                                   'class': 'w-full px-4 py-3 bg-gray-800/50 border border-gray-700 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition',
+                                   'class': 'w-full px-4 py-3 bg-gray-800/50 border border-gray-700 rounded-xl text-black  placeholder-gray-500 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition',
                                    'placeholder': 'Иванов'
                                }))
     
@@ -26,7 +25,7 @@ class CustomUserCreationForm(UserCreationForm):
         fields = ('username', 'email', 'first_name', 'last_name', 'password1', 'password2')
         widgets = {
             'username': forms.TextInput(attrs={
-                'class': 'w-full px-4 py-3 bg-gray-800/50 border border-gray-700 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition',
+                'class': 'w-full px-4 py-3 bg-gray-800/50 border border-gray-700 rounded-xl text-black placeholder-gray-500 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition',
                 'placeholder': 'username'
             }),
         }
@@ -59,25 +58,30 @@ class UserProfileForm(forms.ModelForm):
         fields = ('first_name', 'last_name', 'email', 'phone', 'bio', 'avatar')
         widgets = {
             'first_name': forms.TextInput(attrs={
-                'class': 'w-full px-4 py-3 bg-gray-800/60 border border-gray-700 rounded-xl text-black placeholder-gray-400 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500/50 transition-all duration-200',
-                'placeholder': 'Введите имя'
+                'class': 'w-full px-4 py-3 bg-white border border-gray-700 rounded-xl text-gray-900 placeholder-gray-500 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all duration-200',
+                'placeholder': 'Введите имя',
+                'style': 'color: #111827 !important; background-color: white !important;'
             }),
             'last_name': forms.TextInput(attrs={
-                'class': 'w-full px-4 py-3 bg-gray-800/60 border border-gray-700 rounded-xl text-black placeholder-gray-400 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500/50 transition-all duration-200',
-                'placeholder': 'Введите фамилию'
+                'class': 'w-full px-4 py-3 bg-white border border-gray-700 rounded-xl text-gray-900 placeholder-gray-500 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all duration-200',
+                'placeholder': 'Введите фамилию',
+                'style': 'color: #111827 !important; background-color: white !important;'
             }),
             'email': forms.EmailInput(attrs={
-                'class': 'w-full px-4 py-3 bg-gray-800/60 border border-gray-700 rounded-xl text-black placeholder-gray-400 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500/50 transition-all duration-200',
-                'placeholder': 'example@mail.com'
+                'class': 'w-full px-4 py-3 bg-white border border-gray-700 rounded-xl text-gray-900 placeholder-gray-500 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all duration-200',
+                'placeholder': 'example@mail.com',
+                'style': 'color: #111827 !important; background-color: white !important;'
             }),
             'phone': forms.TextInput(attrs={
-                'class': 'w-full px-4 py-3 bg-gray-800/60 border border-gray-700 rounded-xl text-black placeholder-gray-400 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500/50 transition-all duration-200',
-                'placeholder': '+7 (999) 000-00-00'
+                'class': 'w-full px-4 py-3 bg-white border border-gray-700 rounded-xl text-gray-900 placeholder-gray-500 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all duration-200',
+                'placeholder': '+7 (999) 000-00-00',
+                'style': 'color: #111827 !important; background-color: white !important;'
             }),
             'bio': forms.Textarea(attrs={
-                'class': 'w-full px-4 py-3 bg-gray-800/60 border border-gray-700 rounded-xl text-black placeholder-gray-400 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500/50 transition-all duration-200 resize-none',
+                'class': 'w-full px-4 py-3 bg-white border border-gray-700 rounded-xl text-gray-900 placeholder-gray-500 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all duration-200 resize-none',
                 'rows': 4,
-                'placeholder': 'Расскажите немного о себе...'
+                'placeholder': 'Расскажите немного о себе...',
+                'style': 'color: #111827 !important; background-color: white !important;'
             }),
             'avatar': forms.FileInput(attrs={
                 'class': 'block w-full text-sm text-gray-400 file:mr-4 file:py-2.5 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-medium file:bg-blue-500/20 file:text-blue-400 hover:file:bg-blue-500/30 file:cursor-pointer cursor-pointer'
